@@ -5,10 +5,8 @@ import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.verify
 import fr.cedriccreusot.euroexchangerate.rates.usecases.models.Rate
 import fr.cedriccreusot.euroexchangerate.rates.usecases.repositories.GetRatesRepository
-import io.kotlintest.TestCase
 import io.kotlintest.specs.StringSpec
 import org.mockito.Mockito.mock
-import kotlin.math.exp
 
 class FetchLatestRatesUseCaseTest : StringSpec ({
 

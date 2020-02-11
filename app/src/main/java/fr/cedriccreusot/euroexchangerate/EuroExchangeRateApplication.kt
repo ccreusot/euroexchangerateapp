@@ -15,7 +15,7 @@ import org.koin.dsl.module
 
 class EuroExchangeRateApplication : Application() {
 
-    val appModule = module {
+    private val appModule = module {
         single<GetRatesRepository> { GetRatesRepositoryAdapter(ExchangeRatesApiService.createService()) }
         single { FetchLatestRatesUseCase.createUseCase(get()) }
         viewModel { RateListViewModel(get()) }

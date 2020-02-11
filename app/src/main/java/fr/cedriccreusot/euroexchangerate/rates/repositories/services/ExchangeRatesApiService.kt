@@ -32,7 +32,7 @@ internal class ExchangeRatesApiServiceImpl : ExchangeRatesApiService {
         return try {
             service.latestRates().execute().body()!!
         } catch (e: Exception) {
-            throw Exception()
+            throw Exception(e)
         }
     }
 }
