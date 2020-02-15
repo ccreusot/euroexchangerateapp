@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".EuroExchangeRateApplication">
-        <activity android:name=".MainActivity">
+        <activity android:name="fr.cedriccreusot.presentation.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW"/>

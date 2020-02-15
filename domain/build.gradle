@@ -1,0 +1,23 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+    test.java.srcDirs += 'src/test/kotlin'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.google.truth:truth:1.0.1'
+    testImplementation 'io.kotlintest:kotlintest-runner-junit4:3.4.2'
+    testImplementation 'org.mockito:mockito-core:3.2.4'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+}
+
+
