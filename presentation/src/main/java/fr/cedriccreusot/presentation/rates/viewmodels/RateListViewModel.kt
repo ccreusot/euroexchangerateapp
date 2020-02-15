@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 class RateListViewModel(private val useCase: FetchLatestRatesUseCase) : ViewModel() {
     val isLoading : MutableLiveData<Boolean> = MutableLiveData(true)
 
-    val rateList : MutableLiveData<List<Rate>> = MutableLiveData<List<Rate>>(emptyList())
+    val rateList : MutableLiveData<List<RateViewModel>> = MutableLiveData(emptyList())
 
     fun fetchRates() {
         viewModelScope.launch(Dispatchers.Main) {
@@ -25,7 +25,9 @@ class RateListViewModel(private val useCase: FetchLatestRatesUseCase) : ViewMode
                 }
             }
             if (rates != null) {
-                rateList.value = rates
+                rateList.value = rates.map {
+                    RateViewModel(it.code, it.ratio)
+                }
                 isLoading.value = false
             }
         }
