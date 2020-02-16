@@ -1,11 +1,15 @@
 package fr.cedriccreusot.euroexchangerate
 
 import android.app.Application
+import fr.cedriccreusot.domain.rates.FetchHistoryForSymbolsUseCase
 import fr.cedriccreusot.network_adapters.rates.GetRatesRepositoryAdapter
 import fr.cedriccreusot.network_adapters.rates.services.ExchangeRatesApiService
 import fr.cedriccreusot.presentation.rates.list.viewmodels.RateListViewModel
 import fr.cedriccreusot.domain.rates.FetchLatestRatesUseCase
+import fr.cedriccreusot.domain.rates.repositories.GetHistoryRateRepository
 import fr.cedriccreusot.domain.rates.repositories.GetRatesRepository
+import fr.cedriccreusot.network_adapters.rates.GetHistoryRateRepositoryAdapter
+import fr.cedriccreusot.presentation.rates.detail.viewmodels.RateDetailViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.android.viewmodel.dsl.viewModel
@@ -17,11 +21,19 @@ class EuroExchangeRateApplication : Application() {
     private val appModule = module {
         single<GetRatesRepository> {
             GetRatesRepositoryAdapter(
-                ExchangeRatesApiService.createService()
+                get()
             )
         }
+        single<GetHistoryRateRepository> {
+            GetHistoryRateRepositoryAdapter(
+                get()
+            )
+        }
+        single { ExchangeRatesApiService.createService() }
         single { FetchLatestRatesUseCase.createUseCase(get()) }
+        single { FetchHistoryForSymbolsUseCase.createUseCase(get()) }
         viewModel { RateListViewModel(get()) }
+        viewModel { RateDetailViewModel(get()) }
     }
 
     override fun onCreate() {

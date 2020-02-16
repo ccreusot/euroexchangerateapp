@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="viewModel"
+            type="fr.cedriccreusot.presentation.rates.detail.viewmodels.RateDetailViewModel" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".rates.detail.RateDetailFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <ir.farshid_roohi.linegraph.LineChart
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:chart_padding_bottom="24dp"
+            app:chart_padding_top="24dp"
+            app:chart_padding_left="16dp"
+            app:chart_padding_right="16dp"/>
 
-    </FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
 </layout>

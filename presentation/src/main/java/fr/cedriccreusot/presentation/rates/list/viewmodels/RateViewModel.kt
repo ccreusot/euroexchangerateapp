@@ -20,7 +20,9 @@ data class RateViewModel(
     fun print() : String = "${rate.code} : ${rate.ratio} EUR"
 
     fun openDetail(view : View) {
-        view.findNavController()
-            .navigate(R.id.rateDetailFragment, RateDetailFragmentArgs(rate.code).toBundle())
+        view.findNavController().navigate(
+                R.id.rateDetailFragment,
+                RateDetailFragmentArgs(rate.code).toBundle()
+        )
     }
 }

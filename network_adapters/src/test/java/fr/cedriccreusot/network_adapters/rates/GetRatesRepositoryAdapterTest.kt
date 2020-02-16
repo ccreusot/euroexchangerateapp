@@ -33,7 +33,6 @@ class GetRatesRepositoryAdapterTest : StringSpec({
         verify(service).latestRates()
     }
 
-
     """
         Given the get rates repository
         When this repository get rates
