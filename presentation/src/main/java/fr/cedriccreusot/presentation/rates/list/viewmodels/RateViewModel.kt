@@ -1,7 +1,6 @@
-package fr.cedriccreusot.presentation.rates.viewmodels
+package fr.cedriccreusot.presentation.rates.list.viewmodels
 
 import android.util.Log
-import androidx.databinding.Bindable
 import java.math.BigDecimal
 
 data class RateViewModel(

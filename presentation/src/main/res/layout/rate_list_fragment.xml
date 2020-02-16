@@ -7,13 +7,13 @@
     <data>
         <variable
             name="viewModel"
-            type="fr.cedriccreusot.presentation.rates.viewmodels.RateListViewModel" />
+            type="fr.cedriccreusot.presentation.rates.list.viewmodels.RateListViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="fr.cedriccreusot.presentation.rates.RateListFragment">
+        tools:context="fr.cedriccreusot.presentation.rates.list.RateListFragment">
 
         <ViewFlipper
             android:layout_width="match_parent"

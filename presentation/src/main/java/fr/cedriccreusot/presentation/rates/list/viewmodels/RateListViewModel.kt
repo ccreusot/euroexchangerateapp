@@ -1,10 +1,9 @@
-package fr.cedriccreusot.presentation.rates.viewmodels
+package fr.cedriccreusot.presentation.rates.list.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.cedriccreusot.domain.rates.FetchLatestRatesUseCase
-import fr.cedriccreusot.domain.rates.models.Rate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,7 +14,7 @@ class RateListViewModel(private val useCase: FetchLatestRatesUseCase) : ViewMode
     val rateList : MutableLiveData<List<RateViewModel>> = MutableLiveData(emptyList())
 
     fun fetchRates() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch {
             isLoading.value = true
             val rates = withContext(Dispatchers.IO) {
                 try {

@@ -3,7 +3,7 @@ package fr.cedriccreusot.euroexchangerate
 import android.app.Application
 import fr.cedriccreusot.network_adapters.rates.GetRatesRepositoryAdapter
 import fr.cedriccreusot.network_adapters.rates.services.ExchangeRatesApiService
-import fr.cedriccreusot.presentation.rates.viewmodels.RateListViewModel
+import fr.cedriccreusot.presentation.rates.list.viewmodels.RateListViewModel
 import fr.cedriccreusot.domain.rates.FetchLatestRatesUseCase
 import fr.cedriccreusot.domain.rates.repositories.GetRatesRepository
 import org.koin.android.ext.koin.androidContext

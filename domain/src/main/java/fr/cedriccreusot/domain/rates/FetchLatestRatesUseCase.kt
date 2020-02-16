@@ -4,6 +4,7 @@ import fr.cedriccreusot.domain.rates.models.Rate
 import fr.cedriccreusot.domain.rates.repositories.GetRatesRepository
 
 interface FetchLatestRatesUseCase {
+    @Throws(Exception::class)
     fun invoke() : List<Rate>
 
     companion object {
