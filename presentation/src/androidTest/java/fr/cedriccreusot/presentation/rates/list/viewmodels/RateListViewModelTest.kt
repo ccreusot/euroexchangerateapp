@@ -62,7 +62,7 @@ class RateListViewModelTest {
         verify(observerIsLoading, times(1)).onChanged(false)
         verify(observerRateList).onChanged(emptyList())
         verify(observerRateList).onChanged(listOf(
-            RateViewModel("USD", 1.2.toBigDecimal())
+            RateViewModel(Rate("USD", 1.2.toBigDecimal()))
         ))
         verify(useCase).invoke()
     }

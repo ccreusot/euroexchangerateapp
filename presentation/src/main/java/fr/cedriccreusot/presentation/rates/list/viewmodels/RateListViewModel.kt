@@ -25,7 +25,7 @@ class RateListViewModel(private val useCase: FetchLatestRatesUseCase) : ViewMode
             }
             if (rates != null) {
                 rateList.value = rates.map {
-                    RateViewModel(it.code, it.ratio)
+                    RateViewModel(it)
                 }
                 isLoading.value = false
             }

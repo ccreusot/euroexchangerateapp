@@ -6,5 +6,18 @@
     <fragment
         android:id="@+id/rateListFragment"
         android:name="fr.cedriccreusot.presentation.rates.list.RateListFragment"
-        android:label="RateListFragment" />
+        android:label="RateListFragment" >
+        <action
+            android:id="@+id/action_rateListFragment_to_rateDetailFragment"
+            app:destination="@id/rateDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rateDetailFragment"
+        android:name="fr.cedriccreusot.presentation.rates.detail.RateDetailFragment"
+        android:label="RateDetailFragment" >
+        <argument
+            android:name="code"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
