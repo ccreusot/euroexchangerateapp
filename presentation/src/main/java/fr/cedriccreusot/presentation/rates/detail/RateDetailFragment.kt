@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 
 import fr.cedriccreusot.presentation.databinding.RateDetailFragmentBinding
@@ -22,5 +23,15 @@ class RateDetailFragment : Fragment() {
         binding.viewModel = rateDetailViewModel
         binding.lifecycleOwner = this
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        arguments?.let {args ->
+            val fromBundle = RateDetailFragmentArgs.fromBundle(args)
+            fromBundle.code?.let { code ->
+                rateDetailViewModel.fetchDetails(code)
+            }
+        }
     }
 }

@@ -24,12 +24,13 @@ class GetHistoryRateRepositoryAdapterTest : StringSpec({
             GetHistoryRateRepositoryAdapter(
                 service
             )
-        val simpleDateFormat = SimpleDateFormat("yyyy-mm-dd")
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = Calendar.getInstance().time
         val currentDateFormatted = simpleDateFormat.format(currentDate)
-        Calendar.getInstance().set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR) - 1)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR) - 1)
         val startDateFormatted = simpleDateFormat.format(
-            Calendar.getInstance().time)
+            calendar.time)
 
         given(service.historyRate(startDateFormatted, currentDateFormatted, "USD")).willThrow(Exception())
 
@@ -52,12 +53,13 @@ class GetHistoryRateRepositoryAdapterTest : StringSpec({
             GetHistoryRateRepositoryAdapter(
                 service
             )
-        val simpleDateFormat = SimpleDateFormat("yyyy-mm-dd")
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = Calendar.getInstance().time
         val currentDateFormatted = simpleDateFormat.format(currentDate)
-        Calendar.getInstance().set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR) - 1)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR) - 1)
         val startDateFormatted = simpleDateFormat.format(
-            Calendar.getInstance().time)
+            calendar.time)
 
         given(service.historyRate(startDateFormatted, currentDateFormatted, "USD")).willReturn(
             DateRates(
