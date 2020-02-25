@@ -9,7 +9,9 @@
         android:label="RateListFragment" >
         <action
             android:id="@+id/action_rateListFragment_to_rateDetailFragment"
-            app:destination="@id/rateDetailFragment" />
+            app:destination="@id/rateDetailFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/rateListFragment" />
     </fragment>
     <fragment
         android:id="@+id/rateDetailFragment"

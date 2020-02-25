@@ -12,17 +12,16 @@ import fr.cedriccreusot.domain.rates.models.Rate
 import fr.cedriccreusot.presentation.R
 import fr.cedriccreusot.presentation.rates.detail.RateDetailFragment
 import fr.cedriccreusot.presentation.rates.detail.RateDetailFragmentArgs
+import fr.cedriccreusot.presentation.rates.routes.RatesRouter
 import java.math.BigDecimal
 
 data class RateViewModel(
-    private val rate: Rate
+    private val rate: Rate,
+    private val router: RatesRouter
 ) {
     fun print() : String = "${rate.code} : ${rate.ratio} EUR"
 
-    fun openDetail(view : View) {
-        view.findNavController().navigate(
-                R.id.rateDetailFragment,
-                RateDetailFragmentArgs(rate.code).toBundle()
-        )
+    fun openDetail() {
+        router.getToDetails(rate.code)
     }
 }
