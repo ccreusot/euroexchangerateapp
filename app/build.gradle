@@ -38,6 +38,7 @@ dependencies {
     implementation project(':presentation')
     implementation project(':network_adapters')
 
+    implementation "androidx.navigation:navigation-runtime:$nav_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

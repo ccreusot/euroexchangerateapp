@@ -26,13 +26,14 @@ class RateDetailViewModelTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
+    private val observerRateList = Mockito.mock(Observer::class.java)
+    private val observerIsLoading = Mockito.mock(Observer::class.java)
+    private val useCase = Mockito.mock(FetchHistoryForSymbolsUseCase::class.java)
+    private val viewModel = RateDetailViewModel(useCase)
+
+
     @Test
     fun testFechWhenAnExceptionIsRaised() = coroutinesTestRule.testDispatcher.runBlockingTest {
-        val observerRateList = Mockito.mock(Observer::class.java)
-        val observerIsLoading = Mockito.mock(Observer::class.java)
-        val useCase = Mockito.mock(FetchHistoryForSymbolsUseCase::class.java)
-        val viewModel = RateDetailViewModel(useCase)
-
         viewModel.isLoading.observeForever(observerIsLoading as Observer<Boolean>)
         viewModel.rateList.observeForever(observerRateList as Observer<in List<DateRateViewModel>>)
         given(useCase.invoke("USD")).willThrow(Exception())
@@ -46,11 +47,6 @@ class RateDetailViewModelTest {
 
     @Test
     fun testFechWhenEmptyCode() = coroutinesTestRule.testDispatcher.runBlockingTest {
-        val observerRateList = Mockito.mock(Observer::class.java)
-        val observerIsLoading = Mockito.mock(Observer::class.java)
-        val useCase = Mockito.mock(FetchHistoryForSymbolsUseCase::class.java)
-        val viewModel = RateDetailViewModel(useCase)
-
         viewModel.isLoading.observeForever(observerIsLoading as Observer<Boolean>)
         viewModel.rateList.observeForever(observerRateList as Observer<in List<DateRateViewModel>>)
         given(useCase.invoke("")).willReturn(emptyList())
@@ -65,10 +61,6 @@ class RateDetailViewModelTest {
 
     @Test
     fun testFechWhenCodeIsOk() = coroutinesTestRule.testDispatcher.runBlockingTest {
-        val observerRateList = Mockito.mock(Observer::class.java)
-        val observerIsLoading = Mockito.mock(Observer::class.java)
-        val useCase = Mockito.mock(FetchHistoryForSymbolsUseCase::class.java)
-        val viewModel = RateDetailViewModel(useCase)
         val expectedList = listOf(
             DateRateViewModel(DateRate("2018-01-01", Rate("USD", 1.2.toBigDecimal())))
         )

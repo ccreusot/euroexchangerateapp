@@ -6,8 +6,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nhaarman.mockitokotlin2.*
 import fr.cedriccreusot.domain.rates.FetchLatestRatesUseCase
 import fr.cedriccreusot.domain.rates.models.Rate
+import fr.cedriccreusot.presentation.rates.routes.RatesRouter
 import fr.cedriccreusot.presentation.test.utils.CoroutinesTestRule
 import kotlinx.coroutines.test.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,13 +24,14 @@ class RateListViewModelTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
+    private val observerIsLoading = Mockito.mock(Observer::class.java)
+    private val observerRateList = Mockito.mock(Observer::class.java)
+    private val useCase = Mockito.mock(FetchLatestRatesUseCase::class.java)
+    private val router = Mockito.mock(RatesRouter::class.java)
+    private val viewModel = RateListViewModel(useCase, router)
+
     @Test
     fun testFetchWhenAnExceptionIsRaised() = coroutinesTestRule.testDispatcher.runBlockingTest {
-        val observerIsLoading = Mockito.mock(Observer::class.java)
-        val observerRateList = Mockito.mock(Observer::class.java)
-        val useCase = Mockito.mock(FetchLatestRatesUseCase::class.java)
-        val viewModel = RateListViewModel(useCase)
-
         viewModel.isLoading.observeForever(observerIsLoading as Observer<Boolean>)
         viewModel.rateList.observeForever(observerRateList as Observer<in List<RateViewModel>>)
         given(useCase.invoke()).willThrow(Exception())
@@ -42,11 +45,6 @@ class RateListViewModelTest {
 
     @Test
     fun testFetchSucceed() = coroutinesTestRule.testDispatcher.runBlockingTest {
-        val observerIsLoading = Mockito.mock(Observer::class.java)
-        val observerRateList = Mockito.mock(Observer::class.java)
-        val useCase = Mockito.mock(FetchLatestRatesUseCase::class.java)
-        val viewModel = RateListViewModel(useCase)
-
         viewModel.isLoading.observeForever(observerIsLoading as Observer<Boolean>)
         viewModel.rateList.observeForever(observerRateList as Observer<in List<RateViewModel>>)
 
@@ -62,7 +60,7 @@ class RateListViewModelTest {
         verify(observerIsLoading, times(1)).onChanged(false)
         verify(observerRateList).onChanged(emptyList())
         verify(observerRateList).onChanged(listOf(
-            RateViewModel(Rate("USD", 1.2.toBigDecimal()))
+            RateViewModel(Rate("USD", 1.2.toBigDecimal()), router)
         ))
         verify(useCase).invoke()
     }
