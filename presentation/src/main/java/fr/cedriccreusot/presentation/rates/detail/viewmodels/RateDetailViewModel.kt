@@ -10,15 +10,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RateDetailViewModel(private val useCase: FetchHistoryForSymbolsUseCase) : ViewModel() {
+class RateDetailViewModel(
+    private val useCase: FetchHistoryForSymbolsUseCase,
+    private val code: String
+) : ViewModel() {
 
     val isLoading: LiveData<Boolean> = MutableLiveData<Boolean>(true)
-    val rateList: LiveData<List<DateRateViewModel>> = MutableLiveData<List<DateRateViewModel>>(emptyList())
 
-    fun fetchDetails(code: String) {
+    val rateList: LiveData<List<DateRateViewModel>> by lazy {
+        fetchDetails(code)
+        MutableLiveData<List<DateRateViewModel>>(emptyList())
+    }
+
+    private fun fetchDetails(code: String) {
         viewModelScope.launch {
             var hasThrown = false
-            (rateList as MutableLiveData).value =
+            val rates =
                 withContext(Dispatchers.IO) {
                     try {
                         useCase.invoke(code).map {
@@ -29,6 +36,7 @@ class RateDetailViewModel(private val useCase: FetchHistoryForSymbolsUseCase) : 
                         emptyList<DateRateViewModel>()
                     }
                 }
+            (rateList as MutableLiveData).value = rates
             if (!hasThrown) {
                 (isLoading as MutableLiveData).value = false
             }

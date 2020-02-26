@@ -24,20 +24,30 @@ class RateListViewModelTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
-    private val observerIsLoading = Mockito.mock(Observer::class.java)
-    private val observerRateList = Mockito.mock(Observer::class.java)
-    private val useCase = Mockito.mock(FetchLatestRatesUseCase::class.java)
-    private val router = Mockito.mock(RatesRouter::class.java)
-    private val viewModel = RateListViewModel(useCase, router)
+    private lateinit var observerIsLoading: Observer<Boolean>
+    private lateinit var observerRateList: Observer<List<RateViewModel>>
+    private lateinit var useCase: FetchLatestRatesUseCase
+    private lateinit var router: RatesRouter
+
+    @Before
+    fun setUp() {
+        observerIsLoading = Mockito.mock(Observer::class.java) as Observer<Boolean>
+        observerRateList = Mockito.mock(Observer::class.java) as Observer<List<RateViewModel>>
+        useCase = Mockito.mock(FetchLatestRatesUseCase::class.java)
+        router = Mockito.mock(RatesRouter::class.java)
+    }
 
     @Test
     fun testFetchWhenAnExceptionIsRaised() = coroutinesTestRule.testDispatcher.runBlockingTest {
-        viewModel.isLoading.observeForever(observerIsLoading as Observer<Boolean>)
-        viewModel.rateList.observeForever(observerRateList as Observer<in List<RateViewModel>>)
+        // Given
         given(useCase.invoke()).willThrow(Exception())
 
-        viewModel.fetchRates()
+        // When
+        val viewModel = RateListViewModel(useCase, router)
+        viewModel.isLoading.observeForever(observerIsLoading)
+        viewModel.rateList.observeForever(observerRateList)
 
+        // Then
         verify(observerIsLoading, times(2)).onChanged(true)
         verify(observerRateList).onChanged(emptyList())
         verify(useCase).invoke()
@@ -45,17 +55,19 @@ class RateListViewModelTest {
 
     @Test
     fun testFetchSucceed() = coroutinesTestRule.testDispatcher.runBlockingTest {
-        viewModel.isLoading.observeForever(observerIsLoading as Observer<Boolean>)
-        viewModel.rateList.observeForever(observerRateList as Observer<in List<RateViewModel>>)
-
+        // Given
         given(useCase.invoke()).willReturn(
             listOf(
                 Rate("USD", 1.2.toBigDecimal())
             )
         )
 
-        viewModel.fetchRates()
+        // When
+        val viewModel = RateListViewModel(useCase, router)
+        viewModel.isLoading.observeForever(observerIsLoading)
+        viewModel.rateList.observeForever(observerRateList)
 
+        // Then
         verify(observerIsLoading, times(2)).onChanged(true)
         verify(observerIsLoading, times(1)).onChanged(false)
         verify(observerRateList).onChanged(emptyList())

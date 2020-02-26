@@ -12,9 +12,12 @@ import kotlinx.coroutines.withContext
 class RateListViewModel(private val useCase: FetchLatestRatesUseCase, private val router: RatesRouter) : ViewModel() {
     val isLoading : MutableLiveData<Boolean> = MutableLiveData(true)
 
-    val rateList : MutableLiveData<List<RateViewModel>> = MutableLiveData(emptyList())
+    val rateList : MutableLiveData<List<RateViewModel>> by lazy {
+        fetchRates()
+        MutableLiveData<List<RateViewModel>>(emptyList())
+    }
 
-    fun fetchRates() {
+    private fun fetchRates() {
         viewModelScope.launch {
             isLoading.value = true
             val rates = withContext(Dispatchers.IO) {

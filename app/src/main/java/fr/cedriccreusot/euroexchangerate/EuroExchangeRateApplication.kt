@@ -40,7 +40,7 @@ class EuroExchangeRateApplication : Application() {
         single { FetchHistoryForSymbolsUseCase.createUseCase(get()) }
         single { (navController: NavController) -> RatesRouter.createRoutes(navController)}
         viewModel { (navController: NavController) -> RateListViewModel(get(), get { parametersOf(navController) }) }
-        viewModel { RateDetailViewModel(get()) }
+        viewModel { (code: String) -> RateDetailViewModel(get(), code) }
     }
 
     override fun onCreate() {
