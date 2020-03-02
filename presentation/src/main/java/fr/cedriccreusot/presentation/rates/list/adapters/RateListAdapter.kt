@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import fr.cedriccreusot.presentation.databinding.RateListItemBinding
+import fr.cedriccreusot.presentation.R
 import fr.cedriccreusot.presentation.rates.list.viewholders.RateViewHolder
 import fr.cedriccreusot.presentation.rates.list.viewmodels.RateViewModel
 
@@ -14,7 +14,8 @@ class RateListAdapter : ListAdapter<RateViewModel, RateViewHolder>(ItemCallback(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RateViewHolder {
-        return RateViewHolder(RateListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        val inflater = LayoutInflater.from(parent.context)
+        return RateViewHolder(inflater.inflate(R.layout.rate_list_item, parent, false))
     }
 
     internal class ItemCallback : DiffUtil.ItemCallback<RateViewModel>() {
