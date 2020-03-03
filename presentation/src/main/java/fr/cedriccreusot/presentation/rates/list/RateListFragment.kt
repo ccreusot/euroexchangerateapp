@@ -9,13 +9,10 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import fr.cedriccreusot.presentation.R
 import fr.cedriccreusot.presentation.rates.list.adapters.RateListAdapter
-import fr.cedriccreusot.presentation.rates.list.bindingadapters.isLoading
 import fr.cedriccreusot.presentation.rates.list.viewmodels.RateListViewModel
-import fr.cedriccreusot.presentation.rates.routes.RatesRouter
 import kotlinx.android.synthetic.main.rate_list_fragment.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.util.*
 
 
 class RateListFragment : Fragment() {
